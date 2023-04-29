@@ -1,50 +1,39 @@
 #include "mbed.h"
 
-// Initialize InterruptIn objects for Joystick pins
 InterruptIn up(p15);
 InterruptIn down(p12);
 InterruptIn left(p13);
 InterruptIn right(p16);
 InterruptIn center(p14);
 
-// Define callback functions for each Joystick pin
-void up_callback() {
-    printf("Joystick pushed up\n");
+void joystick_interrupt_up() {
+    printf("Joystick Up\n");
 }
 
-void down_callback() {
-    printf("Joystick pushed down\n");
+void joystick_interrupt_down() {
+    printf("Joystick Down\n");
 }
 
-void left_callback() {
-    printf("Joystick pushed left\n");
+void joystick_interrupt_left() {
+    printf("Joystick Left\n");
 }
 
-void right_callback() {
-    printf("Joystick pushed right\n");
+void joystick_interrupt_right() {
+    printf("Joystick Right\n");
 }
 
-void center_callback() {
-    printf("Joystick pushed center\n");
+void joystick_interrupt_center() {
+    printf("Joystick Center\n");
 }
 
 int main() {
-
-    // Enable the pull-up resistors on the Joystick pins
-    up.mode(PullUp);
-    down.mode(PullUp);
-    left.mode(PullUp);
-    right.mode(PullUp);
-    center.mode(PullUp);
-
-    // Configure InterruptIn objects to detect a falling edge
-    up.fall(callback(up_callback));
-    down.fall(callback(down_callback));
-    left.fall(callback(left_callback));
-    right.fall(callback(right_callback));
-    center.fall(callback(center_callback));
+    up.fall(&joystick_interrupt_up);
+    down.fall(&joystick_interrupt_down);
+    left.fall(&joystick_interrupt_left);
+    right.fall(&joystick_interrupt_right);
+    center.fall(&joystick_interrupt_center);
 
     while(1) {
-        // Wait for interrupts
+        // Do nothing
     }
 }
